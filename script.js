@@ -29,19 +29,22 @@ const rollTheDice = () => {
     return number;
 };
 
+const switchPlayer = () => {
+    current = 0;
+    document.getElementById(`current--${activePlayer}`).textContent = current;
+    activePlayer = activePlayer === 0 ? 1 : 0;
+    player0El.classList.toggle('player--active');
+    player1El.classList.toggle('player--active');
+};
+
 const updCurrentScore = (number) => {
     if (number !== 1) {
         current += number;
         document.getElementById(`current--${activePlayer}`).textContent =
             current;
     } else {
-        // SWITCH TO NEXT PLAYER
-        current = 0;
-        document.getElementById(`current--${activePlayer}`).textContent =
-            current;
-        activePlayer = activePlayer === 0 ? 1 : 0;
-        player0El.classList.toggle('player--active');
-        player1El.classList.toggle('player--active');
+        // CHANGE PLAYER
+        switchPlayer();
     }
 };
 
@@ -57,11 +60,11 @@ rollDiceEl.addEventListener('click', () => {
 });
 
 holdDiceEl.addEventListener('click', () => {
+    // ADD CURRENT SCORE TO ACTIVE PLAYER'S SCORE
     score[activePlayer] += current;
     document.getElementById(`score--${activePlayer}`).textContent =
         score[activePlayer];
-    current = 0;
-    document.getElementById(`current--${activePlayer}`).textContent = current;
+
     if (score[activePlayer] >= 100) {
         document
             .querySelector(`.player--${activePlayer}`)
@@ -72,8 +75,7 @@ holdDiceEl.addEventListener('click', () => {
         rollDiceEl.disabled = true;
         holdDiceEl.disabled = true;
     } else {
-        activePlayer = activePlayer === 0 ? 1 : 0;
-        player0El.classList.toggle('player--active');
-        player1El.classList.toggle('player--active');
+        // CHANGE PLAYER
+        switchPlayer();
     }
 });

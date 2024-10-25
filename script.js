@@ -13,7 +13,7 @@ const rollDiceEl = document.querySelector('.btn--roll');
 const holdDiceEl = document.querySelector('.btn--hold');
 
 // VARIABLES
-const score = [0, 0]; // FIRST PLAYER [0], SECOND PLAYER [1]
+let score = [0, 0]; // FIRST PLAYER [0], SECOND PLAYER [1]
 let current = 0;
 let activePlayer = 0;
 
@@ -61,26 +61,27 @@ const updCurrentScore = (number) => {
 };
 
 const startNewGame = () => {
-    score[0] = 0;
-    score[1] = 0;
+    score = [0, 0];
     current = 0;
     activePlayer = 0;
+
     displayScore0El.textContent = 0;
     displayScore1El.textContent = 0;
     currentScore0El.textContent = 0;
     currentScore1El.textContent = 0;
+
     player0El.classList.remove('player--winner');
     player1El.classList.remove('player--winner');
     player0El.classList.add('player--active');
     player1El.classList.remove('player--active');
+    diceEl.classList.add('hidden');
+
     rollDiceEl.disabled = false;
     holdDiceEl.disabled = false;
 };
 
 // STARTING CONDITIONS
-displayScore0El.textContent = 0;
-displayScore1El.textContent = 0;
-diceEl.classList.add('hidden');
+startNewGame();
 
 // EVENT LISTENERS
 rollDiceEl.addEventListener('click', () => {

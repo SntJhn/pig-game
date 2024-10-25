@@ -37,6 +37,18 @@ const switchPlayer = () => {
     player1El.classList.toggle('player--active');
 };
 
+const playerWin = () => {
+    document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.add('player--winner');
+    document
+        .querySelector(`.player--${activePlayer}`)
+        .classList.remove('player--active');
+    rollDiceEl.disabled = true;
+    holdDiceEl.disabled = true;
+    diceEl.classList.add('hidden');
+};
+
 const updCurrentScore = (number) => {
     if (number !== 1) {
         current += number;
@@ -46,6 +58,23 @@ const updCurrentScore = (number) => {
         // CHANGE PLAYER
         switchPlayer();
     }
+};
+
+const startNewGame = () => {
+    score[0] = 0;
+    score[1] = 0;
+    current = 0;
+    activePlayer = 0;
+    displayScore0El.textContent = 0;
+    displayScore1El.textContent = 0;
+    currentScore0El.textContent = 0;
+    currentScore1El.textContent = 0;
+    player0El.classList.remove('player--winner');
+    player1El.classList.remove('player--winner');
+    player0El.classList.add('player--active');
+    player1El.classList.remove('player--active');
+    rollDiceEl.disabled = false;
+    holdDiceEl.disabled = false;
 };
 
 // STARTING CONDITIONS
@@ -65,17 +94,13 @@ holdDiceEl.addEventListener('click', () => {
     document.getElementById(`score--${activePlayer}`).textContent =
         score[activePlayer];
 
-    if (score[activePlayer] >= 100) {
-        document
-            .querySelector(`.player--${activePlayer}`)
-            .classList.add('player--winner');
-        document
-            .querySelector(`.player--${activePlayer}`)
-            .classList.remove('player--active');
-        rollDiceEl.disabled = true;
-        holdDiceEl.disabled = true;
+    if (score[activePlayer] >= 20) {
+        // PLAYER WINS
+        playerWin();
     } else {
         // CHANGE PLAYER
         switchPlayer();
     }
 });
+
+newGameEl.addEventListener('click', startNewGame);

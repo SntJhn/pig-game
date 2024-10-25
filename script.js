@@ -40,7 +40,8 @@ const updCurrentScore = (number) => {
         document.getElementById(`current--${activePlayer}`).textContent =
             current;
         activePlayer = activePlayer === 0 ? 1 : 0;
-        player;
+        player0El.classList.toggle('player--active');
+        player1El.classList.toggle('player--active');
     }
 };
 

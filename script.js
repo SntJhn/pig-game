@@ -55,3 +55,25 @@ rollDiceEl.addEventListener('click', () => {
     const number = rollTheDice();
     updCurrentScore(number);
 });
+
+holdDiceEl.addEventListener('click', () => {
+    score[activePlayer] += current;
+    document.getElementById(`score--${activePlayer}`).textContent =
+        score[activePlayer];
+    current = 0;
+    document.getElementById(`current--${activePlayer}`).textContent = current;
+    if (score[activePlayer] >= 100) {
+        document
+            .querySelector(`.player--${activePlayer}`)
+            .classList.add('player--winner');
+        document
+            .querySelector(`.player--${activePlayer}`)
+            .classList.remove('player--active');
+        rollDiceEl.disabled = true;
+        holdDiceEl.disabled = true;
+    } else {
+        activePlayer = activePlayer === 0 ? 1 : 0;
+        player0El.classList.toggle('player--active');
+        player1El.classList.toggle('player--active');
+    }
+});
